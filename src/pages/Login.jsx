@@ -1,66 +1,60 @@
 import React, { useState } from 'react';
-import LMain from '../layouts/LMain';
+import MainLayout from '../layouts/MainLayout';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from "../components/AuthContext";
+import { useTheme } from '../components/ModeContext';
+import { useUser } from '../components/UserContext';
 
-function LoginForm() {
-  const { isLoggedIn, login } = useAuth(); // Obtiene isLoggedIn y login del contexto
-
+//Login Page
+export default function LoginForm() {
+  //Login context
+  const { isLoggedIn, login } = useAuth();
+  const { setUserName } = useUser();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // Supongamos que tienes un objeto que almacena las credenciales del usuario
+  //Handle darkmode
+  const { isDarkMode, toggleDarkMode } = useTheme();
+
+  //Users database
   const database = {
-    username: "a",
-    password: "a"
+    username: "usuario",
+    password: "demo"
   };
 
+  //Validate login
   const handleLogin = () => {
     if (username === database.username && password === database.password) {
-      login(); // Llama a la función login del contexto
-      // Utiliza Navigate para redirigir al usuario a la página principal
+      login();
+      setUserName(username);
     } else {
-      alert("Nope");
+      alert("Contraseña o Usuario incorrectos");
     }
   };
 
   return (
-    <LMain>
-      <div>
+    <MainLayout>
+      <div className={`flex flex-col items-center justify-center h-screen ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+        <h2 className="text-3xl font-bold mb-4">Iniciar Sesión</h2>
         <input
+          className={`mb-4 p-2 border rounded focus:outline-none focus:border-blue-500 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
           type="text"
           placeholder="Usuario"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+          onChange={(e) => setUsername(e.target.value)} />
         <input
+          className={`mb-4 p-2 border rounded focus:outline-none focus:border-blue-500 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
           type="password"
           placeholder="Contraseña"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          onChange={(e) => setPassword(e.target.value)} />
         {isLoggedIn ? <Navigate to="/" /> : null}
-        <button onClick={handleLogin}>Iniciar sesión</button>
+        <button
+          className={`bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none ${isDarkMode ? 'dark-button' : ''}`}
+          onClick={handleLogin}>
+          Iniciar sesión
+        </button>
       </div>
-    </LMain>
+    </MainLayout>
   );
 }
-
-export default LoginForm;
-
-
-
-
-/*
-// User Login info
-const database = [
-  {
-    username: "a",
-    password: "a"
-  },
-  {
-    username: "user2",
-    password: "pass2"
-  }
-];
-*/

@@ -1,22 +1,50 @@
-import { Link } from "react-router-dom"
+import React, { useState } from 'react';
+import { Link } from "react-router-dom";
+import { useTheme } from '../components/ModeContext';
+import { useUser } from '../components/UserContext';
 
-export default function Menu(){
-    return(
-      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">TO-DO</span>
-    <button data-collapse-toggle="navbar-dropdown" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false"></button>
-        <button class="flex items-center">
-            <Link to='/'> Home</Link>
+
+//Main menu
+export default function Menu() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  //handle darkmode
+  const { isDarkMode, toggleDarkMode } = useTheme();
+
+  //Handle Username
+  const { username } = useUser();
+  console.log(username)
+  return (
+    <div className="bg-blue-500 p-4">
+      <div className="max-w-screen-xl flex items-center justify-between mx-auto">
+        <span className="text-3xl font-semibold text-white">TO-DO</span>
+        <button
+          data-collapse-toggle="navbar-dropdown"
+          type="button"
+          className="md:hidden text-gray-500 hover:text-gray-700 ml-auto"
+          aria-controls="navbar-dropdown"
+          aria-expanded={isOpen}
+          onClick={toggleMenu}>
+          <span className="text-3xl font-semibold text-white">{isOpen ? '⇨' : '⇦'}</span>
         </button>
-        <button> 
-            <Link to='/contact'>Contact</Link>
-        </button>
-        <button> 
-            <Link to='/tasks'>Tasks</Link>
-        </button>
-        <button> 
-            <Link to='/login'>Login</Link>
-        </button>
+        <div className={`md:flex space-x-4 ${isOpen ? '' : 'hidden'}`}>
+          <Link to="/" className="text-white hover:underline">Home</Link>
+          <Link to="/contact" className="text-white hover:underline">Contact</Link>
+          <Link to="/tasks" className="text-white hover:underline">Tasks</Link>
+          <Link to="/login" className="text-white hover:underline">Login</Link>
+          <div>{username && (<p className="text-white">Usuario: {username}</p>)}
+          </div>
+          <button
+            onClick={toggleDarkMode}
+            className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md">
+            {isDarkMode ? "🌞" : "🌕"}
+          </button>
+        </div>
       </div>
-    )
-  }
+    </div>
+  );
+}

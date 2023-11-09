@@ -1,6 +1,7 @@
-// AuthContext.js
 import { createContext, useContext, useState } from 'react';
 
+
+//Login context
 const AuthContext = createContext();
 
 export function useAuth() {

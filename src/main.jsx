@@ -1,18 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import { AuthProvider } from './components/AuthContext';
+import { ThemeProvider } from './components/ModeContext';
+import { UserProvider } from './components/UserContext';
 
 import Home from './pages/Home.jsx'
 import Contact from './pages/Contact.jsx'
 import PrivateRoutes from './components/PrivateRoutes';
 import TaskList from './pages/TaskList';
-import Error404 from './pages/Error404';
+import Error from './pages/Error';
 import Login from './pages/Login';
-import { AuthProvider } from './components/AuthContext';
 
 
 const router = createBrowserRouter([
@@ -25,28 +25,32 @@ const router = createBrowserRouter([
     element: <PrivateRoutes component={Contact}/>,
   },
   {
-    path: "/protected",
-    element: <PrivateRoutes />,
-  },
-  {
     path: "/tasks",
     element: <PrivateRoutes component={TaskList}/>,
   },
   {
-    path: "*",
-    element: <Error404 />,
-  },
-  {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "*",
+    element: <Error />,
+  },
+  {
+    path: "/protected",
+    element: <PrivateRoutes />,
   },
 ]);
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <ThemeProvider>
+      <UserProvider>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </UserProvider>
+    </ThemeProvider>
   </React.StrictMode>,
 );

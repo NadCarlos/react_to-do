@@ -1,5 +1,5 @@
 import MainLayout from "../layouts/MainLayout"
-import { useTheme } from '../components/ModeContext';
+import { useTheme } from '../appContext/ModeContext';
 
 
 //Contact Page

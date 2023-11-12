@@ -1,6 +1,6 @@
 import MainLayout from "../layouts/MainLayout"
-import { useTheme } from '../components/ModeContext';
-import { useUser } from '../components/UserContext';
+import { useTheme } from '../appContext/ModeContext';
+import { useUser } from '../appContext/UserContext';
 
 
 //Home Page

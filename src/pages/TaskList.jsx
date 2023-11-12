@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import todos from '../data/todos.json';
-import { useTheme } from '../components/ModeContext';
-
+import { useTheme } from '../appContext/ModeContext';
 
 export default function TaskList(props) {
-
-  //Handle tasks
+  // Handle tasks
   const [taskList, setTaskList] = useState(todos);
   const handleToggleComplete = (taskId) => {
     const updatedTaskList = taskList.map((task) => {
@@ -15,13 +13,13 @@ export default function TaskList(props) {
       }
       return task;
     });
-
     setTaskList(updatedTaskList);
   };
 
-  //Handle pages
+  // Handle pages
   const [currentPage, setCurrentPage] = useState(1);
-  const tasksPerPage = 9;
+  const [tasksPerPage, setTasksPerPage] = useState(5);
+
   const indexOfLastTask = currentPage * tasksPerPage;
   const indexOfFirstTask = indexOfLastTask - tasksPerPage;
   const currentTasks = taskList.slice(indexOfFirstTask, indexOfLastTask);
@@ -33,7 +31,7 @@ export default function TaskList(props) {
     }
   };
 
-  //Handle darkmode
+  // Handle darkmode
   const { isDarkMode, toggleDarkMode } = useTheme();
 
   return (
@@ -41,6 +39,20 @@ export default function TaskList(props) {
       <div className={`h-screen w-screen ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white'} shadow-md`}>
         <div className={`text-center ${isDarkMode ? 'text-white' : 'text-black'}`}>
           <h1 className="text-4xl font-bold mb-6">Lista de Tareas</h1>
+
+          {/* Agregar el selector para la cantidad de tareas por página */}
+          <label htmlFor="tasksPerPage" className="mr-2">Tareas por Página:</label>
+          <select
+            id="tasksPerPage"
+            value={tasksPerPage}
+            onChange={(e) => setTasksPerPage(Number(e.target.value))}
+            className="p-2 border rounded-md">
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={15}>15</option>
+              <option value={20}>20</option>
+          </select>
+
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 grid-rows-2 gap-10">
             {currentTasks.map((p) => (
               <div key={p.id} className={`p-10 border rounded-lg ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}>
@@ -73,6 +85,6 @@ export default function TaskList(props) {
           </div>
         </div>
       </div>
-    </MainLayout >
+    </MainLayout>
   );
 }

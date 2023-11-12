@@ -11,6 +11,7 @@ EFI: Lista de tareas pendientes
 
 - React
 - Vite
+- Tailwind
 
 ## Configuración del Proyecto
 

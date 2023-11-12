@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from "../components/AuthContext";
-import { useTheme } from '../components/ModeContext';
-import { useUser } from '../components/UserContext';
+import { useAuth } from "../appContext/AuthContext";
+import { useTheme } from '../appContext/ModeContext';
+import { useUser } from '../appContext/UserContext';
 
 //Login Page
 export default function LoginForm() {

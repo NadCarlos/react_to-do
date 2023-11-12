@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { AuthProvider } from './components/AuthContext';
-import { ThemeProvider } from './components/ModeContext';
-import { UserProvider } from './components/UserContext';
+import { AuthProvider } from './appContext/AuthContext';
+import { ThemeProvider } from './appContext/ModeContext';
+import { UserProvider } from './appContext/UserContext';
 
 import Home from './pages/Home.jsx'
 import Contact from './pages/Contact.jsx'
-import PrivateRoutes from './components/PrivateRoutes';
+import PrivateRoutes from './appContext/PrivateRoutes';
 import TaskList from './pages/TaskList';
 import Error from './pages/Error';
 import Login from './pages/Login';

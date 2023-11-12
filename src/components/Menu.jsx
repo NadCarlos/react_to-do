@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { useTheme } from '../components/ModeContext';
-import { useUser } from '../components/UserContext';
+import { useTheme } from '../appContext/ModeContext';
+import { useUser } from '../appContext/UserContext';
 
 
 //Main menu
